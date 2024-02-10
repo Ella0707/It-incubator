@@ -1,40 +1,76 @@
-import React from "react";
+import React, {ChangeEvent, useState, KeyboardEvent} from "react";
 import {TaskType} from "../App";
 
 export type ChangeFilterType = 'all' | 'completed' | 'active'
 
 type TodoListType = {
-  title: string;
+  titleHead: string;
   tasks: Array<TaskType>;
-  removedTask: (id: number )=> void;
+  removedTask: (id: string )=> void;
   changeFilter: (value: ChangeFilterType) => void;
+  addTask: (titleTask: string) => void;
 }
 
 
-export const TodoList = ({title, tasks, removedTask, changeFilter}: TodoListType) => {
+
+
+export const TodoList = ({titleHead, tasks, removedTask, changeFilter, addTask}: TodoListType) => {
+  let [titleTask, setTitleTask] = useState('')
+
+  const addTaskHundler = () => {
+    addTask(titleTask)
+    setTitleTask('')
+  }
+
+  const onChangeHundler = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitleTask(event.currentTarget.value)
+  }
+
+  const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      addTaskHundler()
+    }
+  }
+
+  const onAllTasks = () => {
+    changeFilter('all')
+  }
+
+  const onActiveTasks = () => {
+    changeFilter('active')
+  }
+  const onDoneTasks = () => {
+    changeFilter('completed')
+  }
+
   return (
     <div>
-      <h3>{title}</h3>
+      <h3>{titleHead}</h3>
       <div>
-        <input/>
-        <button>+</button>
+        <input value={titleTask}
+               onChange={onChangeHundler}
+               onKeyDown={onKeyDown}
+        />
+        <button onClick={addTaskHundler}>+</button>
       </div>
       <ul>
         {tasks.map((task) => {
+          const onClickHundler = () => {removedTask(task.id)}
+
             return (
               <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/>
                 <span>{task.title}</span>
-                <button onClick={() => removedTask(task.id)}>✖</button>
+                <button onClick={onClickHundler}>✖</button>
               </li>
             )
           }
         )}
       </ul>
       <div>
-        <button onClick={() => changeFilter('all')}>All</button>
-        <button onClick={() => changeFilter('active')}>Active</button>
-        <button onClick={() => changeFilter('completed')}>Completed</button>
+        <button onClick={onAllTasks}>All</button>
+        <button onClick={onActiveTasks}>Active</button>
+        <button onClick={onDoneTasks}>Completed</button>
       </div>
     </div>
   )
