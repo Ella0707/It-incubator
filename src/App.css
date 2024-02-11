@@ -1,8 +1,5 @@
 .App {
-  padding: 30px;
-  display: flex;
-}
-
-.App > div {
-  margin-right: 50px;
+  padding: 50px;
+  background: #474747;
+  height: 100vh;
 }

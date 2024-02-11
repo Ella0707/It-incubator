@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { v1 } from 'uuid';
+import {v1} from 'uuid';
 import './App.css';
 import {ChangeFilterType, TodoList} from "./components/TodoList";
 
@@ -21,7 +21,7 @@ function App() {
   ])
 
   const removedTask = (id: string) => {
-   let  filteredTasks = tasks.filter(t => t.id != id)
+    let filteredTasks = tasks.filter(t => t.id != id)
     setTasks(filteredTasks)
   }
 
@@ -35,15 +35,23 @@ function App() {
   let taskForTodoList = tasks
 
   if (filter === 'active') {
-    taskForTodoList  = tasks.filter( t => !t.isDone )
+    taskForTodoList = tasks.filter(t => !t.isDone)
   }
 
   if (filter === 'completed') {
-    taskForTodoList  = tasks.filter( t => t.isDone )
+    taskForTodoList = tasks.filter(t => t.isDone)
   }
 
-  const changeFilter = ( value: ChangeFilterType) => {
+  const changeFilter = (value: ChangeFilterType) => {
     setFilter(value)
+  }
+
+  const changeTaskStatus = (id: string, isDone: boolean) => {
+    let task = tasks.find(t => t.id === id)
+    if (task) {
+      task.isDone = isDone
+      setTasks([...tasks])
+    }
   }
 
   return (
@@ -54,6 +62,8 @@ function App() {
         removedTask={removedTask}
         changeFilter={changeFilter}
         addTask={addTask}
+        changeTaskStatus={changeTaskStatus}
+        filter={filter}
       />
     </div>
   );
