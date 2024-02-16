@@ -10,6 +10,12 @@ export type TaskType = {
   isDone: boolean;
 }
 
+type TodolistsType = {
+  id: string;
+  title: string;
+  filter: ChangeFilterType;
+}
+
 function App() {
 
   let [filter, setFilter] = useState<ChangeFilterType>('all')
@@ -54,17 +60,41 @@ function App() {
     }
   }
 
+  const arr = [
+    {
+      id: v1(),
+      title: 'Title-1',
+    },
+    {
+      id: v1(),
+      title: 'Title-2'
+    },
+  ]
+
+  let [todolists, setTodolists]=useState<TodolistsType[]>([
+    {id: v1(), title: 'What to learn', filter: 'all'},
+    {id: v1(), title: 'What to buy', filter: 'all'},
+  ])
+
   return (
     <div className="App">
-      <TodoList
-        titleHead={'What to do?'}
-        tasks={taskForTodoList}
-        removedTask={removedTask}
-        changeFilter={changeFilter}
-        addTask={addTask}
-        changeTaskStatus={changeTaskStatus}
-        filter={filter}
-      />
+      <div className='content'>
+        {todolists.map((el) => {
+          return (
+            <TodoList
+              key={el.id}
+              titleHead={el.title}
+              tasks={taskForTodoList}
+              removedTask={removedTask}
+              changeFilter={changeFilter}
+              addTask={addTask}
+              changeTaskStatus={changeTaskStatus}
+              filter={el.filter}
+            />
+          )
+        })}
+
+      </div>
     </div>
   );
 }

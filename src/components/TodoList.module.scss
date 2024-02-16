@@ -4,6 +4,7 @@
   border-radius: 5px;
   width: 240px;
   color: #fff;
+  user-select: none;
 
   &__title {
     font-size: 24px;
@@ -47,9 +48,8 @@
     background: #FF9900;
     color: #ffffff;
     border-radius: 2px;
+    flex-shrink: 0;
 
-    outline: none;
-    border: none;
     cursor: pointer;
     box-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
     transition: .2s;
@@ -57,6 +57,59 @@
     &:active {
       box-shadow: none;
       transform: scale(0.99);
+    }
+  }
+
+  &__tasksList {
+    margin-bottom: 30px;
+  }
+
+  &__taskItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+
+  &__deleteButton {
+    margin-left: auto;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+
+    background: #474747;
+    color: #fff;
+    transition: .4s;
+    border-radius: 2px;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  &__filterButtons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+  }
+
+  &__filterButton {
+    background: #474747;
+    color: #fff;
+    transition: .4s;
+    cursor: pointer;
+    padding: 6px 4px;
+    border-radius: 2px;
+
+    &:hover {
+      opacity: .8;
+    }
+
+    &.active {
+      background: #FF9900;
     }
   }
 }

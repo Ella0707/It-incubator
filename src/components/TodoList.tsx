@@ -74,7 +74,7 @@ export const TodoList = ({titleHead, tasks, removedTask, changeFilter, addTask, 
           </div>
         }
       </div>
-      <ul>
+      <ul className={styles.todoList__tasksList}>
         {tasks.map((task) => {
           const onClickHundler = () => {removedTask(task.id)}
           const onChangeHundler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +82,10 @@ export const TodoList = ({titleHead, tasks, removedTask, changeFilter, addTask, 
             changeTaskStatus(task.id, isDoneValue)
           }
             return (
-              <li className={task.isDone ? styles.done : styles.todoList__taskItem}
+              <li className={cx(
+                styles.todoList__taskItem,
+                task.isDone && styles.done
+              )}
                 key={task.id}>
                 <input
                   className={styles.todoList__checkbox}
@@ -105,19 +108,28 @@ export const TodoList = ({titleHead, tasks, removedTask, changeFilter, addTask, 
           }
         )}
       </ul>
-      <div>
+      <div className={styles.todoList__filterButtons}>
         <button
-          className={filter === 'all' ? styles.active : styles.todoList__filterButton}
+          className={cx(
+            styles.todoList__filterButton,
+            filter === 'all' && styles.active
+          )}
           onClick={onAllTasks}>
           All
         </button>
         <button
-          className={filter === 'active' ? styles.active : styles.todoList__filterButton}
+          className={cx(
+            styles.todoList__filterButton,
+            filter === 'active' && styles.active
+          )}
           onClick={onActiveTasks}>
           Active
         </button>
         <button
-          className={filter === 'completed' ? styles.active : styles.todoList__filterButton}
+          className={cx(
+            styles.todoList__filterButton,
+            filter === 'completed' && styles.active
+          )}
           onClick={onDoneTasks}>
           Completed
         </button>
